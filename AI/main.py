@@ -2,6 +2,7 @@ from neuralintents import GenericAssistant
 import speech_recognition
 import pyttsx3 as tts
 import sys
+import json
 
 recognizer = speech_recognition.Recognizer()
 
@@ -82,7 +83,7 @@ def show_todos():
     speaker.runAndWait()
 
 def hello():
-    speaker.say("Hello. What can I do fot you?")
+    speaker.say("Hello. What can I do for you?")
     speaker.runAndWait()
 
 def quit():
@@ -98,7 +99,7 @@ mapping = {
     "exit": quit
 }
 
-assistant = GenericAssistant("intents.json")
+assistant = GenericAssistant('intents.json', intent_methods=mapping)
 assistant.train_model()
 
 while True:
@@ -112,6 +113,5 @@ while True:
             message = message.lower()
 
         assistant.request(message)
-
-    except speech_recognition.UnknownValueError():
+    except speech_recognition.UnknownValueError:
         recognizer = speech_recognition.Recognizer()
